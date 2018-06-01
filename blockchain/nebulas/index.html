@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="common/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="common/css/commin.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.min.css">
+    <title>彩票</title>
+</head>
+
+<body>
+    <div class="container-fluid all_wrap">
+        <header>
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                                          <span class="sr-only">Toggle navigation</span>
+                                          <span class="icon-bar"></span>
+                                          <span class="icon-bar"></span>
+                                          <span class="icon-bar"></span>
+                                        </button>
+                        <a class="navbar-brand" href="#">
+                                        星云体彩
+                                    </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#" data-target="section_home">首页 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#" data-target="section_personal">个人中心</a></li>
+                        </ul>
+                        <!-- <form class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="搜索">
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form> -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <div class="input_file_wrap text-center">
+                                    <input class="wallet_file" id="change_wallet" type="file" name="file">
+                                    <label for="change_wallet">更换钱包</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container-fluid -->
+            </nav>
+        </header>
+        <div class="section_home section">
+            <div class="container section_title">
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="active"><a href="#">冠军游戏</a></li>
+                    <!-- <li role="presentation"><a href="#">冠亚军游戏</a></li> -->
+                </ul>
+            </div>
+
+            <div class="container list-wrap">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>球队</th>
+                                    <th>赔率</th>
+                                    <th>概率</th>
+                                    <th>金额（NAS）</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table_checked" id="tbody1">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>球队</th>
+                                    <th>赔率</th>
+                                    <th>概率</th>
+                                    <th>金额（NAS）</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table_checked" id="tbody2">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <footer>
+                <div class="container nopadding section_buy">
+                    <p class="buy_container">
+                        <span class="span_wrap">
+                                        <label for="">投注倍数：</label>
+                                            <button type="button" class="btn btn-xs btn-default" onclick="stakesSum(false)" >-</button>
+                                            <input class="stakes_num" type="number" value=1 maxlength="2" readonly />
+                                            <button type="button" class="btn btn-xs btn-default" onclick="stakesSum(true)">+</button>
+                                        <label for="">[最高99倍]</label>
+                                    </span>
+                        <span class="span_wrap">
+                                            <label>投注金额：</label>
+                                            <span class="stakes_pay_money">0</span>
+                        <label for="">NAS</label>
+                        </span>
+                        <span class="span_wrap">
+                                            <label>理论最高奖金：</label>
+                                            <span class="stakes_win_money">0.00</span>
+                        <label for="">NAS</label>
+                        </span>
+                        <span class="span_wrap">
+                                    <button class="pay" onclick="onClickSendTx()">去支付</button>
+                                </span>
+                    </p>
+                    <p class="message">
+                        提示：<b>1.冠军、冠亚军游戏兑奖周期较长，请妥善保存您购买的彩票。</b>2.页面中的奖金仅供参考，实际奖金以出票时刻奖金为准。计算器显示的奖金=每1NAS对应中奖奖金。
+                    </p>
+                </div>
+            </footer>
+        </div>
+        <div class="section_personal container section hidden">
+            <div class="col-xs-12">
+                <h4>账户余额:
+                    <span id="user_balance"></span>
+                </h4>
+            </div>
+            <div class="col-xs-12">
+                <div class="clearfix">
+                    <h3 class="pull-left">押注信息</h3>
+                    <div class="pull-right" style="min-width: 200px;height: 56px;line-height: 56px;">
+                        <button class="btn btn-danger hidden lottery_btn" disabled id="noLottery">未开奖</button>
+                        <button class="btn btn-danger hidden lottery_btn" id="lottery" onclick="settlement()">已开奖，去结算</button>
+                    </div>
+                </div>
+
+
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <th>编号</th>
+                        <th>球队</th>
+                        <th>注数</th>
+                    </thead>
+                    <tbody id="trxlist">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script src="common/js/jquery-3.3.1.min.js"></script>
+    <script src="common/js/bootstrap.min.js"></script>
+    <!-- 弹出框插件 -->
+    <script src="plugin/layer/layer.js"></script>
+    <!-- 公共方法 -->
+    <script src="common/js/common.js"></script>
+    <!-- 项目依赖 -->
+    <script src="dist/nebulas.js"></script>
+    <script src="dist/nebPay.js"></script>
+    <!-- bignumber -->
+    <script src="https://cdn.bootcss.com/bignumber.js/7.2.1/bignumber.js"></script>
+    <!-- 创建文件 -->
+    <script src="dist/ui-block.js"></script>
+    <!-- 项目配置 -->
+    <script src="js/option.js"></script>
+    <!-- 请求方法封装 -->
+    <script src="js/common_nebulas.js"></script>
+    <!-- 页面交互 -->
+    <script src="js/index.js"></script>
+    <!-- 页面请求 -->
+    <script src="js/request.js"></script>
+</body>
+
+</html>
+
+</html>
